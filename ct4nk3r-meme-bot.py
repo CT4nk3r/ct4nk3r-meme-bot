@@ -1,32 +1,43 @@
 import discord
-from datetime import datetime,timedelta
-
-from praw.models.listing.mixins import subreddit
-from prawcore.exceptions import UnavailableForLegalReasons
+import asyncio
 
 from authentication import reddit_authentication
 from authentication import discord_authentication
+print("Authenticating discord bot...")
 TOKEN = discord_authentication()
+print("Authenticating reddit bot...")
 reddit = reddit_authentication()
 client = discord.Client()
-
 subreddit = reddit.subreddit('memes')
 
 @client.event
 async def on_ready():
-    print('We have logged in as {0.user}'.format(client))
+    print('Discord authentication as: {0.user}'.format(client))
 
 @client.event
 async def on_message(message):
     if message.author == client.user:
         return
 
-    if message.content.startswith('.meme'):
+    if message.content.startswith('!hello'):
+        await message.reply('Hello!', mention_author=True)
+
+    if message.content.startswith('!status'):
+        activity = discord.Game(name="with the API")
+        await client.change_presence(status=discord.Status.idle, activity=activity)
+
+    if message.content.startswith('!meme'):
         new_meme_of_the_day = subreddit.new(limit=1)
         for meme in new_meme_of_the_day:
             print(meme.url)
             await message.channel.send(meme.url)
-    if message.content.startswith('.test'):
-        await message.channel.send('test done')
 
+    if message.content.startswith('!test'):
+        await message.channel.send('test done')
+    
+    if message.content.startswith('!editme'):
+            msg = await message.channel.send('10')
+            await asyncio.sleep(3.0)
+            await msg.edit(content='40')
+    
 client.run(TOKEN)
