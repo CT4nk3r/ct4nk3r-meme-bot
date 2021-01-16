@@ -23,8 +23,8 @@ async def on_message(message):
         await message.reply('Hello!', mention_author=True)
 
     if message.content.startswith('!status'):
-        activity = discord.Game(name="with the API")
-        await client.change_presence(status=discord.Status.idle, activity=activity)
+        activity = discord.Game(name="with codes")
+        await client.change_presence(activity=activity)
 
     if message.content.startswith('!meme'):
         new_meme_of_the_day = subreddit.new(limit=1)
