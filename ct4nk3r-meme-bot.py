@@ -21,7 +21,7 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    if message.content.startswith('.random_meme'):
+    if message.content.startswith('.meme'):
         new_meme_of_the_day = subreddit.new(limit=1)
         for meme in new_meme_of_the_day:
             print(meme.url)
