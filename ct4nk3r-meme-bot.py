@@ -1,5 +1,7 @@
 import discord
 import asyncio
+import random
+from discord.ext import commands
 
 from authentication import reddit_authentication
 from authentication import discord_authentication
@@ -9,6 +11,20 @@ print("Authenticating reddit bot...")
 reddit = reddit_authentication()
 client = discord.Client()
 subreddit = reddit.subreddit('memes')
+
+# 1
+from discord.ext import commands
+
+# 2
+bot = commands.Bot(command_prefix='!')
+
+@bot.command(name='roll_dice', help='Simulates rolling dice.')
+async def roll(ctx, number_of_dice, number_of_sides):
+    dice = [
+        str(random.choice(range(1, number_of_sides + 1)))
+        for _ in range(number_of_dice)
+    ]
+    await ctx.send(', '.join(dice))
 
 @client.event
 async def on_ready():
@@ -22,8 +38,18 @@ async def on_message(message):
     if message.content.startswith('!hello'):
         await message.reply('Hello!', mention_author=True)
 
+    # bot = commands.Bot(command_prefix="$")
+    # bot = discord.Client()
+    # @bot.command()
+    # async def print(ctx, arg):
+    #     await ctx.channel.send(arg)
+
+
     if message.content.startswith('!status'):
         activity = discord.Game(name="with codes")
+        async def status(arg):
+            if arg:
+                activity = discord.Game(name = arg)        
         await client.change_presence(activity=activity)
 
     if message.content.startswith('!meme'):
@@ -43,5 +69,5 @@ async def on_message(message):
             number = number - 1
             await msg.edit(content=number)
             await asyncio.sleep(1.0)
-    
+
 client.run(TOKEN)
