@@ -35,9 +35,13 @@ async def on_message(message):
     if message.content.startswith('!test'):
         await message.channel.send('test done')
     
-    if message.content.startswith('!editme'):
-            msg = await message.channel.send('10')
-            await asyncio.sleep(3.0)
-            await msg.edit(content='40')
+    if message.content.startswith('!countdown'):
+        number = 10
+        msg = await message.channel.send(number)
+        await asyncio.sleep(1.0)
+        while (number != 0):
+            number = number - 1
+            await msg.edit(content=number)
+            await asyncio.sleep(1.0)
     
 client.run(TOKEN)
