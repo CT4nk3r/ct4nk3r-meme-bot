@@ -41,6 +41,7 @@ async def status(ctx, program: str):
 async def meme(ctx):
     new_meme = subreddit.new(limit=1)
     for meme in new_meme:
+        print(meme)
         print(meme.url)
         await ctx.reply(meme.url)
 
@@ -56,6 +57,7 @@ async def countdown(ctx):
 
 @bot.command(name='hello', help='hello command for the bot')
 async def hello(ctx):
+    print(ctx.author)
     await ctx.reply('Hello {0.author}'.format(ctx))
 
 @bot.event
