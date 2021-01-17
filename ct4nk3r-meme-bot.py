@@ -1,6 +1,8 @@
+from os import name
 import discord
 import asyncio
 import random
+from discord import mentions
 
 from discord.ext import commands
 
@@ -25,10 +27,9 @@ async def roll(ctx, number_of_dice: int, number_of_sides: int):
 
 @bot.command(name='status', help='Change status of the bot' )
 async def status(ctx, program: str):
-    if program:
-        activity = discord.Game(name=program)
-        await bot.change_presence(activity=activity)
-        await ctx.reply('Status changed to: {}'.format(program))
+    activity = discord.Game(name=program)
+    await bot.change_presence(activity=activity)
+    await ctx.reply('Status changed to: {}'.format(program))
 
 @bot.command(name='meme', help='sends the newest meme into chat from r/memes')
 async def meme(ctx):
@@ -39,13 +40,17 @@ async def meme(ctx):
 
 @bot.command(name='countdown', help='counting down from 10 to 0')
 async def countdown(ctx):
-        number = 10
-        msg = await ctx.reply(number)
+    number = 10
+    msg = await ctx.reply(number)
+    await asyncio.sleep(1.0)
+    while (number != 0):
+        number = number - 1
+        await msg.edit(content=number)
         await asyncio.sleep(1.0)
-        while (number != 0):
-            number = number - 1
-            await msg.edit(content=number)
-            await asyncio.sleep(1.0)
+
+@bot.command(name='hello', help='hello command for the bot')
+async def hello(ctx):
+    await ctx.reply('Hello {0.author}'.format(ctx))
 
 @bot.event
 async def on_ready():

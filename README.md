@@ -13,7 +13,6 @@ def reddit_authentication():
                      username="username-meme-bot",
                      password="password",
                      user_agent="bot made by u/username")
-    print("Authenticated as {}".format(reddit.user.me()))
     return reddit
 
 def discord_authentication():
