@@ -55,5 +55,12 @@ async def hello(ctx):
 @bot.event
 async def on_ready():
     print('Discord authentication as: {0.user}'.format(bot))
+    activity = discord.Game(name='https://github.com/CT4nk3r/ct4nk3r-meme-bot')
+    await bot.change_presence(activity=activity)
+
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.errors.CheckFailure):
+        await ctx.send('You do not have the correct role for this command.')
 
 bot.run(TOKEN)
