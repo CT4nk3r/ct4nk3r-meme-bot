@@ -16,13 +16,19 @@ print("Reddit authentication as: {}".format(reddit.user.me()))
 subreddit = reddit.subreddit('memes')
 bot = commands.Bot(command_prefix='$')
 
-@bot.command(name='roll_dice', help='Simulates rolling dice.')
+@bot.command(name='roll', help='Simulates rolling dice.')
 async def roll(ctx, number_of_dice: int, number_of_sides: int):
+    total = 0
     dice = [
         str(random.choice(range(1, number_of_sides + 1)))
         for _ in range(number_of_dice)
     ]
+    for roll in dice:
+        total = total + int(roll)
+        print(int(roll))
+    print(total)
     await ctx.send(', '.join(dice))
+    await ctx.send('total: {}'.format(total))
     pass
 
 @bot.command(name='status', help='Change status of the bot' )
