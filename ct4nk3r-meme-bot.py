@@ -1,8 +1,7 @@
-from os import name
 import discord
 import asyncio
 import random
-from discord import mentions
+import os
 
 from discord.ext import commands
 
@@ -65,10 +64,25 @@ async def on_ready():
     print('Discord authentication as: {0.user}'.format(bot))
     activity = discord.Game(name='https://github.com/CT4nk3r/ct4nk3r-meme-bot')
     await bot.change_presence(activity=activity)
-
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.errors.CheckFailure):
         await ctx.send('You do not have the correct role for this command.')
 
+@bot.event
+async def logout():
+    await bot.logout()
+
+async def meme():
+    await bot.wait_until_ready()
+    while not bot.is_closed():
+        new_meme = subreddit.new(limit=1)           
+        for meme in new_meme:
+            print(meme)
+            print(meme.url)
+            channel = bot.get_channel(800129380163518465)
+            await channel.send(meme.url)
+            await asyncio.sleep(50)
+
+bot.loop.create_task(meme())
 bot.run(TOKEN)
