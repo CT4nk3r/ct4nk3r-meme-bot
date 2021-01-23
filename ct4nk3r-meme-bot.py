@@ -75,6 +75,7 @@ async def logout():
 
 async def meme():
     await bot.wait_until_ready()
+    await asyncio.sleep(1.5)
     while not bot.is_closed():
         new_meme = subreddit.new(limit=1)           
         for meme in new_meme:
