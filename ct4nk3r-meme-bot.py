@@ -1,7 +1,8 @@
+from asyncio import events
+import os
 import discord
 import asyncio
 import random
-import os
 
 from discord.ext import commands
 
@@ -15,20 +16,20 @@ print("Reddit authentication as: {}".format(reddit.user.me()))
 subreddit = reddit.subreddit('memes')
 bot = commands.Bot(command_prefix='$')
 
-@bot.command(name='roll', help='Simulates rolling dice.')
-async def roll(ctx, number_of_dice: int, number_of_sides: int):
-    total = 0
-    dice = [
-        str(random.choice(range(1, number_of_sides + 1)))
-        for _ in range(number_of_dice)
-    ]
-    for roll in dice:
-        total = total + int(roll)
-        print(int(roll))
-    print(total)
-    await ctx.send(', '.join(dice))
-    await ctx.send('total: {}'.format(total))
-    pass
+# @bot.command(name='roll', help='Simulates rolling dice.')
+# async def roll(ctx, number_of_dice: int, number_of_sides: int):
+#     total = 0
+#     dice = [
+#         str(random.choice(range(1, number_of_sides + 1)))
+#         for _ in range(number_of_dice)
+#     ]
+#     for roll in dice:
+#         total = total + int(roll)
+#         print(int(roll))
+#     print(total)
+#     await ctx.send(', '.join(dice))
+#     await ctx.send('total: {}'.format(total))
+#     pass
 
 @bot.command(name='status', help='Change status of the bot' )
 async def status(ctx, program: str):
@@ -64,6 +65,7 @@ async def on_ready():
     print('Discord authentication as: {0.user}'.format(bot))
     activity = discord.Game(name='https://github.com/CT4nk3r/ct4nk3r-meme-bot')
     await bot.change_presence(activity=activity)
+
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.errors.CheckFailure):
@@ -84,6 +86,24 @@ async def meme():
             channel = bot.get_channel(800129380163518465)
             await channel.send(meme.url)
             await asyncio.sleep(50)
+@bot.event
+async def on_ready():
+    print('Discord authentication as: {0.user}'.format(bot))
+    activity = discord.Game(name='https://github.com/CT4nk3r/ct4nk3r-meme-bot')
+    await bot.change_presence(activity=activity)
+
+
+@bot.command()
+async def load(ctx, extension):
+    bot.load_extension(f'cogs.{extension}')
+
+@bot.command()
+async def unload(ctx, extension):
+    bot.unload_extension(f'cogs.{extension}')
+
+for filename in os.listdir('./cogs'):
+    if filename.endswith('.py'):
+        bot.load_extension(f'cogs.{filename[:-3]}')
 
 bot.loop.create_task(meme())
 bot.run(TOKEN)
