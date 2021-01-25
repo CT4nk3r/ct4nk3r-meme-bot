@@ -24,7 +24,7 @@ Added a few functions into cogs instead of using the main line:
 
 ```
 Dice:
-  r         Rolls a dice using #d# format.
+  r         Rolls a dice using ndN format.
 Functions:
   countdown counting down from 10 to 0
   status    Change status of the bot
