@@ -1,3 +1,4 @@
+from os import name
 from discord.ext import commands
 import random
 
@@ -20,7 +21,7 @@ class Test(commands.Cog):
         await ctx.send(', '.join(dice))
         await ctx.send('total: {}'.format(total))
     
-    @commands.command()
+    @commands.command(name='ping', help='Writes back Pong in response')
     async def ping(self,ctx):
         await ctx.send("Pong")
 
