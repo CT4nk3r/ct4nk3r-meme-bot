@@ -17,5 +17,5 @@ def reddit_authentication():
 
 def discord_authentication():
     return 'DISCORD_TOKEN'
-    #token should be at https://discord.com/developers/applications/00000000000000/bot -> token -> copy
+#token should be at https://discord.com/developers/applications/00000000000000/bot -> token -> copy
 ```
