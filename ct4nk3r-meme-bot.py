@@ -21,7 +21,7 @@ async def meme(ctx):
     for meme in new_meme:
         print(meme)
         print(meme.url)
-        await ctx.reply(meme.url)
+        await ctx.send(meme.url)
 
 async def meme():
     await bot.wait_until_ready()
