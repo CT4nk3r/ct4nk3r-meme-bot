@@ -25,5 +25,9 @@ class Test(commands.Cog):
     async def ping(self,ctx):
         await ctx.send("Pong")
 
+    @commands.command(name='hello', help='hello command for the bot')
+    async def hello(self, ctx):
+        print(ctx.author)
+        await ctx.reply('Hello {0.author}'.format(ctx))
 def setup(client):
     client.add_cog(Test(client))

@@ -2,7 +2,6 @@ from asyncio import events
 import os
 import discord
 import asyncio
-import random
 
 from discord.ext import commands
 
@@ -24,36 +23,6 @@ async def meme(ctx):
         print(meme.url)
         await ctx.reply(meme.url)
 
-@bot.command(name='countdown', help='counting down from 10 to 0')
-async def countdown(ctx):
-    number = 10
-    msg = await ctx.reply(number)
-    await asyncio.sleep(1.0)
-    while (number != 0):
-        number = number - 1
-        await msg.edit(content=number)
-        await asyncio.sleep(1.0)
-
-@bot.command(name='hello', help='hello command for the bot')
-async def hello(ctx):
-    print(ctx.author)
-    await ctx.reply('Hello {0.author}'.format(ctx))
-
-@bot.event
-async def on_ready():
-    print('Discord authentication as: {0.user}'.format(bot))
-    activity = discord.Game(name='https://github.com/CT4nk3r/ct4nk3r-meme-bot')
-    await bot.change_presence(activity=activity)
-
-@bot.event
-async def on_command_error(ctx, error):
-    if isinstance(error, commands.errors.CheckFailure):
-        await ctx.send('You do not have the correct role for this command.')
-
-@bot.event
-async def logout():
-    await bot.logout()
-
 async def meme():
     await bot.wait_until_ready()
     await asyncio.sleep(1.5)
@@ -71,6 +40,14 @@ async def on_ready():
     activity = discord.Game(name='https://github.com/CT4nk3r/ct4nk3r-meme-bot')
     await bot.change_presence(activity=activity)
 
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.errors.CheckFailure):
+        await ctx.send('You do not have the correct role for this command.')
+
+@bot.event
+async def logout():
+    await bot.logout()
 
 @bot.command()
 async def load(ctx, extension):
