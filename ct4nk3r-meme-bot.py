@@ -1,4 +1,3 @@
-from asyncio import events
 import os
 import discord
 import asyncio
