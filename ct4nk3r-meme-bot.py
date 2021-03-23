@@ -33,6 +33,7 @@ async def meme():
             channel = bot.get_channel(800129380163518465)
             await channel.send(meme.url)
             await asyncio.sleep(50)
+
 @bot.event
 async def on_ready():
     print('Discord authentication as: {0.user}'.format(bot))
